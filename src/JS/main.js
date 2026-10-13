@@ -63,7 +63,7 @@ function listarTarefas(lista){
         remover.textContent = "Remover";
         item.dataset.tarefa = tarefaAtual.id;
         id.textContent = `${tarefaAtual.id} - `;
-
+        
         item.appendChild(id);
         item.appendChild(checkbox);
         item.appendChild(label);
