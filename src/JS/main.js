@@ -37,8 +37,9 @@ function renderizar(){
 function atualizarContador() {
     const totalTarefas = tarefas.length;
     const tarefasConcluidas = tarefas.filter((tarefa) => tarefa.concluida).length;
+    const tarefasPendentes = totalTarefas - tarefasConcluidas;
 
-    contador.textContent = `Total: ${totalTarefas} | Concluídas: ${tarefasConcluidas}`
+    contador.textContent = `Total: ${totalTarefas} | Pendentes: ${tarefasPendentes} | Concluídas: ${tarefasConcluidas}`
 
 }
 
@@ -63,7 +64,7 @@ function listarTarefas(lista){
         remover.textContent = "Remover";
         item.dataset.tarefa = tarefaAtual.id;
         id.textContent = `${tarefaAtual.id} - `;
-        
+
         item.appendChild(id);
         item.appendChild(checkbox);
         item.appendChild(label);
@@ -87,6 +88,27 @@ function obterTarefasFiltradas(filtro) {
         return tarefas.filter((tarefa) => !tarefa.concluida);
     } else if (filtro === "CONCLUÍDAS") {
         return tarefas.filter((tarefa) => tarefa.concluida);
+    } else {
+        return tarefas;
+    }
+}
+
+function adicionarTarefa() {
+    const valorTarefa = tarefa.value.trim();
+
+    if(valorTarefa) {
+        tarefas.push({
+            id: proximoId,
+            nome: valorTarefa,
+            concluida: false,
+        });
+
+        proximoId++;
+
+        tarefa.value = "";
+
+        salvarTarefas();
+        renderizar();
     }
 }
 
@@ -98,24 +120,11 @@ filtros.addEventListener("click", (event) => {
     renderizar();
 });
 
-adicionar.addEventListener("click", () => {
-    const valorTarefa = tarefa.value.trim();
-
-    if(valorTarefa) {
-        tarefas.push({
-            id: proximoId,
-            nome: valorTarefa,
-            concluida: false
-        });
-
-        proximoId++;
-
-        tarefa.value = "";
-
-        salvarTarefas();
-        renderizar();
-    }
-
+adicionar.addEventListener("click", adicionarTarefa); //O addEventListener() aceita uma função como segundo argumento
+tarefa.addEventListener("keydown", (event) => {
+    if (event.key === "Enter"){
+        adicionarTarefa();
+    } 
 });
 
 listaTarefas.addEventListener("click", (event) => {
