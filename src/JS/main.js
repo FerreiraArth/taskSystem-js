@@ -8,6 +8,16 @@ const listaTarefas = document.querySelector("#listaTarefas");
 const contador = document.querySelector("#contador");
 const filtros = document.querySelector("#filtros");
 
+function salvarTarefas(){
+    localStorage.setItem("tarefas", JSON.stringify(tarefas));
+}
+
+function recuperar(){
+    const tarefasSalvas = localStorage.getItem("tarefas");
+    
+    tarefas = JSON.parse(tarefasSalvas);
+}
+
 function renderizar(){
     listarTarefas(obterTarefasFiltradas(filtroAtual));
     atualizarContador();
@@ -49,6 +59,7 @@ function listarTarefas(lista){
         checkbox.addEventListener("change", (event) => {
             tarefaAtual.concluida = event.target.checked;
 
+            salvarTarefas();
             renderizar();
         });
         
@@ -86,6 +97,8 @@ adicionar.addEventListener("click", () => {
         proximoId++;
 
         tarefa.value = "";
+
+        salvarTarefas();
         renderizar();
     }
 
@@ -102,6 +115,10 @@ listaTarefas.addEventListener("click", (event) => {
 
         tarefas = atualizadas;
 
+        salvarTarefas();
         renderizar();
     }
 });
+
+recuperar();
+renderizar();
