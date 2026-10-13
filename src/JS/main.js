@@ -9,7 +9,7 @@ const contador = document.querySelector("#contador");
 const filtros = document.querySelector("#filtros");
 
 function renderizar(){
-    listarTarefas(tarefas);
+    listarTarefas(obterTarefasFiltradas(filtroAtual));
     atualizarContador();
 }
 
@@ -55,6 +55,24 @@ function listarTarefas(lista){
     });
 }
 
+function obterTarefasFiltradas(filtro) {
+    if (filtro === "TODOS") {
+        return tarefas;
+    } else if (filtro === "PENDENTES"){
+        return tarefas.filter((tarefa) => !tarefa.concluida);
+    } else if (filtro === "CONCLUÍDAS") {
+        return tarefas.filter((tarefa) => tarefa.concluida);
+    }
+}
+
+filtros.addEventListener("click", (event) => {
+    const filtroSelecionado = event.target.textContent;
+
+    filtroAtual = filtroSelecionado
+
+    renderizar();
+});
+
 adicionar.addEventListener("click", () => {
     const valorTarefa = tarefa.value.trim();
 
@@ -86,4 +104,4 @@ listaTarefas.addEventListener("click", (event) => {
 
         renderizar();
     }
-})
+});
