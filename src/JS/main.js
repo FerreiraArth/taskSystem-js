@@ -45,6 +45,15 @@ function atualizarContador() {
 
 function listarTarefas(lista){
     listaTarefas.innerHTML = "";
+    
+    if (lista.length === 0) {
+        const item = document.createElement("li");
+
+        item.textContent = "Você ainda não tem tarefas. Que tal adicionar a primeira? 😊";
+
+       listaTarefas.appendChild(item);
+       return;
+    }
 
     lista.forEach((tarefaAtual) => {
         const item = document.createElement("li");
