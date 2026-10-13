@@ -38,7 +38,7 @@ function atualizarContador() {
     const totalTarefas = tarefas.length;
     const tarefasConcluidas = tarefas.filter((tarefa) => tarefa.concluida).length;
 
-    contador.textContent = `Total: ${totalTarefas} | Conclídas: ${tarefasConcluidas}`
+    contador.textContent = `Total: ${totalTarefas} | Concluídas: ${tarefasConcluidas}`
 
 }
 
@@ -50,6 +50,7 @@ function listarTarefas(lista){
         const checkbox = document.createElement("input");
         const label = document.createElement("label");
         const remover = document.createElement("button");
+        const id = document.createElement("span");
 
         checkbox.type = "checkbox";
 
@@ -61,7 +62,9 @@ function listarTarefas(lista){
         label.textContent = tarefaAtual.nome;
         remover.textContent = "Remover";
         item.dataset.tarefa = tarefaAtual.id;
+        id.textContent = `${tarefaAtual.id} - `;
 
+        item.appendChild(id);
         item.appendChild(checkbox);
         item.appendChild(label);
         item.appendChild(remover);
