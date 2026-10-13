@@ -1,12 +1,23 @@
 let tarefas = [];
 let filtroAtual = "TODOS";
 let proximoId = 1;
+let temporizador;
 
 const tarefa = document.querySelector("#tarefa");
 const adicionar = document.querySelector("#adicionar");
 const listaTarefas = document.querySelector("#listaTarefas");
 const contador = document.querySelector("#contador");
 const filtros = document.querySelector("#filtros");
+const mensagem = document.querySelector("#mensagem");
+
+function notificacao(texto){
+    mensagem.textContent = texto;
+    clearTimeout(temporizador);
+
+    temporizador = setTimeout(() => {
+        mensagem.textContent = ""
+    }, 3000);
+}
 
 function salvarTarefas(){
     localStorage.setItem("tarefas", JSON.stringify(tarefas));
@@ -39,7 +50,7 @@ function atualizarContador() {
     const tarefasConcluidas = tarefas.filter((tarefa) => tarefa.concluida).length;
     const tarefasPendentes = totalTarefas - tarefasConcluidas;
 
-    contador.textContent = `Total: ${totalTarefas} | Pendentes: ${tarefasPendentes} | Concluídas: ${tarefasConcluidas}`
+    contador.textContent = `Total: ${totalTarefas} | Pendentes: ${tarefasPendentes} | Concluídas: ${tarefasConcluidas}`;
 
 }
 
@@ -104,8 +115,9 @@ function obterTarefasFiltradas(filtro) {
 
 function adicionarTarefa() {
     const valorTarefa = tarefa.value.trim();
-
+    
     if(valorTarefa) {
+
         tarefas.push({
             id: proximoId,
             nome: valorTarefa,
@@ -113,12 +125,14 @@ function adicionarTarefa() {
         });
 
         proximoId++;
-
+        
         tarefa.value = "";
-
+        
         salvarTarefas();
+        notificacao("Tarefa adicionada com sucesso! 🎉");
         renderizar();
     }
+
 }
 
 filtros.addEventListener("click", (event) => {
@@ -148,6 +162,7 @@ listaTarefas.addEventListener("click", (event) => {
         tarefas = atualizadas;
 
         salvarTarefas();
+        notificacao("Tarefa removida com sucesso! 🗑️");
         renderizar();
     }
 });
