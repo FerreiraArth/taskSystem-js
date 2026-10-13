@@ -10,6 +10,15 @@ const filtros = document.querySelector("#filtros");
 
 function renderizar(){
     listarTarefas(tarefas);
+    atualizarContador();
+}
+
+function atualizarContador() {
+    const totalTarefas = tarefas.length;
+    const tarefasConcluidas = tarefas.filter((tarefa) => tarefa.concluida).length;
+
+    contador.textContent = `Total: ${totalTarefas} | Conclídas: ${tarefasConcluidas}`
+
 }
 
 function listarTarefas(lista){
@@ -65,16 +74,16 @@ adicionar.addEventListener("click", () => {
 });
 
 listaTarefas.addEventListener("click", (event) => {
-    // if(event.target.textContent === "Remover") {
-    //     const item = event.target.parentElement;
-    //     const idTarefa = item.dataset.tarefa;
+    if(event.target.textContent === "Remover") {
+        const item = event.target.parentElement;
+        const idTarefa = item.dataset.tarefa;
 
-    //     const atualizadas = tarefas.filter((tarefa) => {
-    //         return tarefa.id !== Number(idTarefa);
-    //     });
+        const atualizadas = tarefas.filter((tarefa) => {
+            return tarefa.id !== Number(idTarefa);
+        });
 
-    //     tarefas = atualizadas;
+        tarefas = atualizadas;
 
-    //     renderizar();
-    // }
+        renderizar();
+    }
 })
