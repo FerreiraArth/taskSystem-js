@@ -114,7 +114,7 @@ function listarTarefas(lista){
             renderizar();
         });
         
-        editar.addEventListener("click", () => {
+        editar.addEventListener("click", () => { //Melhoria — Evitar que o usuário comece outra edição sem perceber
             const item = editar.parentElement;
             const idTarefa = item.dataset.tarefa;
             const resultado = tarefas.find((tarefa) => tarefa.id === Number(idTarefa));
@@ -163,8 +163,12 @@ function adicionarTarefa() {
         if(idEmEdicao !== null){
             const tarefaEncontrada = tarefas.find((tarefa) => tarefa.id === idEmEdicao); // Dentro do find(), não precisamos usar um if, porque o próprio método já procura o elemento que satisfaz a condição
             
-            tarefaEncontrada.nome = valorTarefa;
-            notificacao("Tarefa editada com sucesso! ");
+            if(tarefaEncontrada){
+                tarefaEncontrada.nome = valorTarefa;
+                notificacao("Tarefa editada com sucesso! ");
+            } else {
+                return;
+            }
             
         } else {
             
