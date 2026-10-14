@@ -190,7 +190,5 @@ listaTarefas.addEventListener("click", (event) => {
     }
 });
 
-
-
 recuperar();
 renderizar();
