@@ -96,7 +96,7 @@ function listarTarefas(lista){
 
         remover.dataset.acao = "remover";
         editar.dataset.acao = "editar";
-        
+
         label.textContent = tarefaAtual.nome;
         remover.textContent = "Remover";
         editar.textContent = "Editar";
@@ -215,7 +215,7 @@ listaTarefas.addEventListener("click", (event) => {
         
 
         if(!document.querySelector("#btn-cancelar")){
-            const tabela = document.querySelector("#campo");
+            const tabela = document.querySelector("#campoFormulario");
             const cancelar = document.createElement("button");
 
             cancelar.textContent = "X";
