@@ -102,12 +102,12 @@ function listarTarefas(lista){
             renderizar();
         });
         
-        editar.addEventListener("click", (event) => {
-            const item = event.target.parentElement;
+        editar.addEventListener("click", () => {
+            const item = editar.parentElement;
             const idTarefa = item.dataset.tarefa;
-
             const resultado = tarefas.find((tarefa) => tarefa.id === Number(idTarefa));
 
+            adicionar.textContent = "Salvar edição"
             idEmEdicao = resultado.id;
             tarefa.value = resultado.nome;
         })
@@ -132,29 +132,29 @@ function adicionarTarefa() {
     if(valorTarefa) {
         if(idEmEdicao !== null){
             const tarefaEncontrada = tarefas.find((tarefa) => tarefa.id === idEmEdicao); // Dentro do find(), não precisamos usar um if, porque o próprio método já procura o elemento que satisfaz a condição
-
+            
             tarefaEncontrada.nome = valorTarefa;
-
+            notificacao("Tarefa editada com sucesso! ");
+            
         } else {
+            
             tarefas.push({
                 id: proximoId,
                 nome: valorTarefa,
                 concluida: false,
             });
-
+            
+            notificacao("Tarefa adicionada com sucesso! 🎉");
             proximoId++;
         }
         
         tarefa.value = "";
+        adicionar.textContent = "Adicionar";
+        idEmEdicao = null;
         
         salvarTarefas();
-        notificacao("Tarefa adicionada com sucesso! 🎉");
         renderizar();
     }
-
-}
-
-function editarTarefa() {
 
 }
 
