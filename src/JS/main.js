@@ -113,34 +113,6 @@ function listarTarefas(lista){
             salvarTarefas();
             renderizar();
         });
-        
-        editar.addEventListener("click", () => { //Melhoria — Evitar que o usuário comece outra edição sem perceber
-            const item = editar.parentElement;
-            const idTarefa = item.dataset.tarefa;
-            const resultado = tarefas.find((tarefa) => tarefa.id === Number(idTarefa));
-
-            if (resultado) {
-                adicionar.textContent = "Salvar edição"
-                idEmEdicao = resultado.id;
-                tarefa.value = resultado.nome;
-            } else {
-                return;
-            }
-            
-
-            if(!document.querySelector("#btn-cancelar")){
-                const tabela = document.querySelector("#campo");
-                const cancelar = document.createElement("button");
-
-                cancelar.textContent = "X";
-                cancelar.id = "btn-cancelar";
-
-                cancelar.addEventListener("click", resetarFormularioEdicao);
-
-                tabela.appendChild(cancelar);
-            }
-
-        })
     });
 }
 
@@ -205,7 +177,9 @@ tarefa.addEventListener("keydown", (event) => {
 });
 
 listaTarefas.addEventListener("click", (event) => {
+
     if(event.target.textContent === "Remover") {
+
         const item = event.target.parentElement;
         const idTarefa = Number(item.dataset.tarefa);
 
@@ -222,6 +196,32 @@ listaTarefas.addEventListener("click", (event) => {
         salvarTarefas();
         notificacao("Tarefa removida com sucesso! 🗑️");
         renderizar();
+    } else if (event.target.textContent === "Editar") {//Melhoria — Evitar que o usuário comece outra edição sem perceber
+        
+        const item = event.target.parentElement;
+        const idTarefa = Number(item.dataset.tarefa);
+        const resultado = tarefas.find((tarefa) => tarefa.id === idTarefa);
+
+        if (resultado) {
+            adicionar.textContent = "Salvar edição"
+            idEmEdicao = resultado.id;
+            tarefa.value = resultado.nome;
+        } else {
+            return;
+        }
+        
+
+        if(!document.querySelector("#btn-cancelar")){
+            const tabela = document.querySelector("#campo");
+            const cancelar = document.createElement("button");
+
+            cancelar.textContent = "X";
+            cancelar.id = "btn-cancelar";
+
+            cancelar.addEventListener("click", resetarFormularioEdicao);
+
+            tabela.appendChild(cancelar);
+        }
     }
 });
 
