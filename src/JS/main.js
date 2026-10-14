@@ -11,7 +11,7 @@ const contador = document.querySelector("#contador");
 const filtros = document.querySelector("#filtros");
 const mensagem = document.querySelector("#mensagem");
 
-function notificacao(texto){
+function notificacao(texto){  //funcao para que o texto seja exibido apenas por 3 segundos
     mensagem.textContent = texto;
     clearTimeout(temporizador);
 
@@ -20,11 +20,11 @@ function notificacao(texto){
     }, 3000);
 }
 
-function salvarTarefas(){
+function salvarTarefas(){ // salvar tarefa usando localStorege, tranformando toda as tarefas de array para uma string em formato JSON
     localStorage.setItem("tarefas", JSON.stringify(tarefas));
 }
 
-function recuperar(){
+function recuperar(){ // recupera o arquivo salvo e o converte em array para que seja usado, a funcao confere se existe tarefas salvas para serem resgatadas e as trata conforme condicao. A funcao tambem impede que seja criada uma mesma ID para diferentes tarefas
     const tarefasSalvas = localStorage.getItem("tarefas");
 
     if(tarefasSalvas === null) {
@@ -41,21 +41,20 @@ function recuperar(){
     }
 }
 
-function renderizar(){
+function renderizar(){ //resume o uso de listar tarefas
     listarTarefas(obterTarefasFiltradas(filtroAtual));
     atualizarContador();
 }
 
-function atualizarContador() {
+function atualizarContador() { //atualiza  e exibe contador em tempo real
     const totalTarefas = tarefas.length;
     const tarefasConcluidas = tarefas.filter((tarefa) => tarefa.concluida).length;
     const tarefasPendentes = totalTarefas - tarefasConcluidas;
 
     contador.textContent = `Total: ${totalTarefas} | Pendentes: ${tarefasPendentes} | Concluídas: ${tarefasConcluidas}`;
-
 }
 
-function resetarFormularioEdicao() {
+function resetarFormularioEdicao() { //funcao para auxiliar na edicao, caso o usuario desista de cancelar uma edicao
     idEmEdicao = null;
     tarefa.value = "";
     adicionar.textContent = "Adicionar";
@@ -70,7 +69,7 @@ function resetarFormularioEdicao() {
 function listarTarefas(lista){
     listaTarefas.innerHTML = "";
     
-    if (lista.length === 0) {
+    if (lista.length === 0) { //condicao amigavel para o caso de ainda nao ter nenhuma tarefa ja cadastrada
         const item = document.createElement("li");
 
         item.textContent = "Você ainda não tem tarefas. Que tal adicionar a primeira? 😊";
@@ -80,6 +79,7 @@ function listarTarefas(lista){
     }
 
     lista.forEach((tarefaAtual) => {
+        //criando todos os elementos que seram usados para identificar, armazenar, criar, editar uma tarefa
         const item = document.createElement("li");
         const checkbox = document.createElement("input");
         const label = document.createElement("label");
@@ -89,13 +89,13 @@ function listarTarefas(lista){
 
         checkbox.type = "checkbox";
 
-        if (tarefaAtual.concluida) {
+        if (tarefaAtual.concluida) { //condicao para marcar o status de uma tarefa 
             checkbox.checked = true;
             item.classList.add("concluida");
         }
 
-        remover.dataset.acao = "remover";
-        editar.dataset.acao = "editar";
+        remover.dataset.acao = "remover"; //identificados de botoes para edicao 
+        editar.dataset.acao = "editar"; // utlizado esse metodo para que tenha uma identificacao unica, assim tendo mais liberdade na edicao de nomeclatura dos botoes
 
         label.textContent = tarefaAtual.nome;
         remover.textContent = "Remover";
@@ -119,11 +119,11 @@ function listarTarefas(lista){
     });
 }
 
-function obterTarefasFiltradas(filtro) {
+function obterTarefasFiltradas(filtro) { //tratamento de filtros, fazendo disticao de qual filtro deve ser exibido
     if (filtro === "TODOS") {
         return tarefas;
     } else if (filtro === "PENDENTES"){
-        return tarefas.filter((tarefa) => !tarefa.concluida);
+        return tarefas.filter((tarefa) => !tarefa.concluida);  //[OBSERVAÇÃO] - criar identificadores unicos para os tipos de filtro utilizando data-*
     } else if (filtro === "CONCLUÍDAS") {
         return tarefas.filter((tarefa) => tarefa.concluida);
     } else {
@@ -132,11 +132,11 @@ function obterTarefasFiltradas(filtro) {
 }
 
 function adicionarTarefa() {
-    const valorTarefa = tarefa.value.trim();
+    const valorTarefa = tarefa.value.trim(); //evitar espaços em branco 
     
-    if(valorTarefa) {
-        if(idEmEdicao !== null){
-            const tarefaEncontrada = tarefas.find((tarefa) => tarefa.id === idEmEdicao); // Dentro do find(), não precisamos usar um if, porque o próprio método já procura o elemento que satisfaz a condição
+    if(valorTarefa) { 
+        if(idEmEdicao !== null){ //identifica se existe uma tarefa em edicao. Metodo utilizado para que essa condicional nao seja repassada todas as vezes
+            const tarefaEncontrada = tarefas.find((tarefa) => tarefa.id === idEmEdicao); 
             
             if(tarefaEncontrada){
                 tarefaEncontrada.nome = valorTarefa;
@@ -154,7 +154,7 @@ function adicionarTarefa() {
             });
             
             notificacao("Tarefa adicionada com sucesso! 🎉");
-            proximoId++;
+            proximoId++; 
         }
         
         resetarFormularioEdicao();
@@ -164,7 +164,7 @@ function adicionarTarefa() {
 
 }
 
-filtros.addEventListener("click", (event) => {
+filtros.addEventListener("click", (event) => { //disparo do filtro
     const filtroSelecionado = event.target.textContent;
 
     filtroAtual = filtroSelecionado
@@ -172,14 +172,15 @@ filtros.addEventListener("click", (event) => {
     renderizar();
 });
 
-adicionar.addEventListener("click", adicionarTarefa); //O addEventListener() aceita uma função como segundo argumento
-tarefa.addEventListener("keydown", (event) => {
+adicionar.addEventListener("click", adicionarTarefa);
+
+tarefa.addEventListener("keydown", (event) => { // ativando botao "ENTER", para enviar tarefas para a lista de tarefas
     if (event.key === "Enter"){
         adicionarTarefa();
     } 
 });
 
-listaTarefas.addEventListener("click", (event) => {
+listaTarefas.addEventListener("click", (event) => { //configurando botão de editar/remover
 
     if(event.target.dataset.acao === "remover") {
 
@@ -192,20 +193,20 @@ listaTarefas.addEventListener("click", (event) => {
 
         tarefas = atualizadas;
 
-        if(idTarefa === idEmEdicao){
+        if(idTarefa === idEmEdicao){ //se o id da tarefa for o mesmo que id em edicao sera resetado para que se o usuario quiser remover a tarefa que estava sendo editada, nao cause erro de permanecer mostrando o processo de edicao e travar a adicao de tarefa
             resetarFormularioEdicao();
         }
 
         salvarTarefas();
         notificacao("Tarefa removida com sucesso! 🗑️");
         renderizar();
-    } else if (event.target.dataset.acao === "editar") {//Melhoria — Evitar que o usuário comece outra edição sem perceber
-        
+    } else if (event.target.dataset.acao === "editar") {
+        //[OBSERVAÇÃO] — Evitar que o usuário comece outra edição sem finalizar a anterior
         const item = event.target.parentElement;
         const idTarefa = Number(item.dataset.tarefa);
         const resultado = tarefas.find((tarefa) => tarefa.id === idTarefa);
 
-        if (resultado) {
+        if (resultado) { //confere se existe uma tarefa para edicao
             adicionar.textContent = "Salvar edição"
             idEmEdicao = resultado.id;
             tarefa.value = resultado.nome;
@@ -214,7 +215,7 @@ listaTarefas.addEventListener("click", (event) => {
         }
         
 
-        if(!document.querySelector("#btn-cancelar")){
+        if(!document.querySelector("#btn-cancelar")){ //cria o botao de cancelar
             const tabela = document.querySelector("#campoFormulario");
             const cancelar = document.createElement("button");
 
