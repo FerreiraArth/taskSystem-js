@@ -1,1 +1,35 @@
 @import url("tarefaConcluida.css");
+
+:root {
+    /* Fundos */
+    --cor-fundo: #0A0A0A;
+    --cor-superficie: #17151C;
+    --cor-superficie-secundaria: #211C29;
+
+    /* Identidade visual */
+    --cor-primaria: #5B2A9E;
+    --cor-primaria-hover: #7546B8;
+    --cor-primaria-escura: #2D2638;
+
+    /* Textos */
+    --cor-texto-principal: #FFFFFF;
+    --cor-texto-secundario: #B8B4C2;
+    --cor-texto-desabilitado: #85808F;
+
+    /* Bordas */
+    --cor-borda: #35303D;
+    --cor-borda-destaque: #5B2A9E;
+
+    /* Estados */
+    --cor-sucesso: #4ADE80;
+    --cor-erro: #F87171;
+
+    /* Formulários */
+    --cor-campo: #100E13;
+    --cor-placeholder: #85808F;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
