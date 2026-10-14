@@ -94,6 +94,9 @@ function listarTarefas(lista){
             item.classList.add("concluida");
         }
 
+        remover.dataset.acao = "remover";
+        editar.dataset.acao = "editar";
+        
         label.textContent = tarefaAtual.nome;
         remover.textContent = "Remover";
         editar.textContent = "Editar";
@@ -178,7 +181,7 @@ tarefa.addEventListener("keydown", (event) => {
 
 listaTarefas.addEventListener("click", (event) => {
 
-    if(event.target.textContent === "Remover") {
+    if(event.target.dataset.acao === "remover") {
 
         const item = event.target.parentElement;
         const idTarefa = Number(item.dataset.tarefa);
@@ -196,7 +199,7 @@ listaTarefas.addEventListener("click", (event) => {
         salvarTarefas();
         notificacao("Tarefa removida com sucesso! 🗑️");
         renderizar();
-    } else if (event.target.textContent === "Editar") {//Melhoria — Evitar que o usuário comece outra edição sem perceber
+    } else if (event.target.dataset.acao === "editar") {//Melhoria — Evitar que o usuário comece outra edição sem perceber
         
         const item = event.target.parentElement;
         const idTarefa = Number(item.dataset.tarefa);
