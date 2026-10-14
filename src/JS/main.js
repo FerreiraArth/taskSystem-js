@@ -55,6 +55,18 @@ function atualizarContador() {
 
 }
 
+function resetarFormularioEdicao() {
+    idEmEdicao = null;
+    tarefa.value = "";
+    adicionar.textContent = "Adicionar";
+    
+    // Procura se o botão de cancelar existe na tabela e o remove
+    const botaoCancelarExistente = document.querySelector("#btn-cancelar");
+    if (botaoCancelarExistente) {
+        botaoCancelarExistente.remove(); // Remove o botão X da tela
+    }
+}
+
 function listarTarefas(lista){
     listaTarefas.innerHTML = "";
     
@@ -107,9 +119,27 @@ function listarTarefas(lista){
             const idTarefa = item.dataset.tarefa;
             const resultado = tarefas.find((tarefa) => tarefa.id === Number(idTarefa));
 
-            adicionar.textContent = "Salvar edição"
-            idEmEdicao = resultado.id;
-            tarefa.value = resultado.nome;
+            if (resultado) {
+                adicionar.textContent = "Salvar edição"
+                idEmEdicao = resultado.id;
+                tarefa.value = resultado.nome;
+            } else {
+                return;
+            }
+            
+
+            if(!document.querySelector("#btn-cancelar")){
+                const tabela = document.querySelector("#campo");
+                const cancelar = document.createElement("button");
+
+                cancelar.textContent = "X";
+                cancelar.id = "btn-cancelar";
+
+                cancelar.addEventListener("click", resetarFormularioEdicao);
+
+                tabela.appendChild(cancelar);
+            }
+
         })
     });
 }
@@ -148,10 +178,7 @@ function adicionarTarefa() {
             proximoId++;
         }
         
-        tarefa.value = "";
-        adicionar.textContent = "Adicionar";
-        idEmEdicao = null;
-        
+        resetarFormularioEdicao();
         salvarTarefas();
         renderizar();
     }
@@ -176,13 +203,17 @@ tarefa.addEventListener("keydown", (event) => {
 listaTarefas.addEventListener("click", (event) => {
     if(event.target.textContent === "Remover") {
         const item = event.target.parentElement;
-        const idTarefa = item.dataset.tarefa;
+        const idTarefa = Number(item.dataset.tarefa);
 
         const atualizadas = tarefas.filter((tarefa) => {
-            return tarefa.id !== Number(idTarefa);
+            return tarefa.id !== idTarefa;
         });
 
         tarefas = atualizadas;
+
+        if(idTarefa === idEmEdicao){
+            resetarFormularioEdicao();
+        }
 
         salvarTarefas();
         notificacao("Tarefa removida com sucesso! 🗑️");
