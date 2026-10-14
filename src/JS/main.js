@@ -2,6 +2,7 @@ let tarefas = [];
 let filtroAtual = "TODOS";
 let proximoId = 1;
 let temporizador;
+let idEmEdicao = null;
 
 const tarefa = document.querySelector("#tarefa");
 const adicionar = document.querySelector("#adicionar");
@@ -72,6 +73,7 @@ function listarTarefas(lista){
         const label = document.createElement("label");
         const remover = document.createElement("button");
         const id = document.createElement("span");
+        const editar = document.createElement("button");
 
         checkbox.type = "checkbox";
 
@@ -82,12 +84,14 @@ function listarTarefas(lista){
 
         label.textContent = tarefaAtual.nome;
         remover.textContent = "Remover";
-        item.dataset.tarefa = tarefaAtual.id;
+        editar.textContent = "Editar";
         id.textContent = `${tarefaAtual.id} - `;
+        item.dataset.tarefa = tarefaAtual.id;
 
         item.appendChild(id);
         item.appendChild(checkbox);
         item.appendChild(label);
+        item.appendChild(editar);
         item.appendChild(remover);
         listaTarefas.appendChild(item);
 
@@ -98,6 +102,15 @@ function listarTarefas(lista){
             renderizar();
         });
         
+        editar.addEventListener("click", (event) => {
+            const item = event.target.parentElement;
+            const idTarefa = item.dataset.tarefa;
+
+            const resultado = tarefas.find((tarefa) => tarefa.id === Number(idTarefa));
+
+            idEmEdicao = resultado.id;
+            tarefa.value = resultado.nome;
+        })
     });
 }
 
@@ -117,14 +130,20 @@ function adicionarTarefa() {
     const valorTarefa = tarefa.value.trim();
     
     if(valorTarefa) {
+        if(idEmEdicao !== null){
+            const tarefaEncontrada = tarefas.find((tarefa) => tarefa.id === idEmEdicao); // Dentro do find(), não precisamos usar um if, porque o próprio método já procura o elemento que satisfaz a condição
 
-        tarefas.push({
-            id: proximoId,
-            nome: valorTarefa,
-            concluida: false,
-        });
+            tarefaEncontrada.nome = valorTarefa;
 
-        proximoId++;
+        } else {
+            tarefas.push({
+                id: proximoId,
+                nome: valorTarefa,
+                concluida: false,
+            });
+
+            proximoId++;
+        }
         
         tarefa.value = "";
         
@@ -132,6 +151,10 @@ function adicionarTarefa() {
         notificacao("Tarefa adicionada com sucesso! 🎉");
         renderizar();
     }
+
+}
+
+function editarTarefa() {
 
 }
 
@@ -166,6 +189,8 @@ listaTarefas.addEventListener("click", (event) => {
         renderizar();
     }
 });
+
+
 
 recuperar();
 renderizar();
