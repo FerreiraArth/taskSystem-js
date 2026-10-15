@@ -13,16 +13,16 @@
 <main>
     
     <h1>TO DO</H1>
-    <div id="campoFormulario">
+    <form id="campoFormulario">
         <input id="tarefa" type="text" placeholder="Digite uma tarefa">
         <button id="adicionar">Adicionar</button>
-    </div>
+    </form>
 
-    <div id="filtros">
-        <button id="todos" data-filtro="TODOS">Todas as tarefas</button>
+    <section id="filtros">
+        <button id="todos" data-filtro="TODOS" class="ativo">Todas as tarefas</button>
         <button id="pendentes" data-filtro="PENDENTES">Em Andamento</button>
         <button id="concluidos" data-filtro="CONCLUÍDAS">Finalizadas</button>
-    </div>
+    </section>
 
     <p id="mensagem"></p>
 
