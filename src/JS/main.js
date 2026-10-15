@@ -10,6 +10,7 @@ const listaTarefas = document.querySelector("#listaTarefas");
 const contador = document.querySelector("#contador");
 const filtros = document.querySelector("#filtros");
 const mensagem = document.querySelector("#mensagem");
+const campoFormulario = document.querySelector("#campoFormulario");
 
 function notificacao(texto){  //funcao para que o texto seja exibido apenas por 3 segundos
     mensagem.textContent = texto;
@@ -83,8 +84,11 @@ function listarTarefas(lista){
         const item = document.createElement("li");
         const checkbox = document.createElement("input");
         const label = document.createElement("label");
+
+        const informacoesTarefa = document.createElement("div");
+        const acoesTarefa = document.createElement("div");
+
         const remover = document.createElement("button");
-        const id = document.createElement("span");
         const editar = document.createElement("button");
 
         checkbox.type = "checkbox";
@@ -100,14 +104,20 @@ function listarTarefas(lista){
         label.textContent = tarefaAtual.nome;
         remover.textContent = "Remover";
         editar.textContent = "Editar";
-        id.textContent = `${tarefaAtual.id} - `;
         item.dataset.tarefa = tarefaAtual.id;
+        
+        informacoesTarefa.classList.add("informacoes-tarefa");
+        acoesTarefa.classList.add("acoes-tarefa");
 
-        item.appendChild(id);
-        item.appendChild(checkbox);
-        item.appendChild(label);
-        item.appendChild(editar);
-        item.appendChild(remover);
+        informacoesTarefa.appendChild(checkbox);
+        informacoesTarefa.appendChild(label);
+
+        acoesTarefa.appendChild(editar);
+        acoesTarefa.appendChild(remover);
+
+        item.appendChild(informacoesTarefa);
+        item.appendChild(acoesTarefa);
+        
         listaTarefas.appendChild(item);
 
         checkbox.addEventListener("change", (event) => {
@@ -164,27 +174,47 @@ function adicionarTarefa() {
 
 }
 
-filtros.addEventListener("click", (event) => { //disparo do filtro
+filtros.addEventListener("click", (event) => { //disparo do filtro    \
+
     const filtroSelecionado = event.target.dataset.filtro;
 
-    filtroAtual = filtroSelecionado
+    if (event.target.hasAttribute("data-filtro")) {
+        filtroAtual = filtroSelecionado;
+    } else {
+        return;
+    }
+    
+    const buttons = filtros.querySelectorAll("button");
 
+    buttons.forEach((button) => {
+        
+        button.classList.remove('ativo');
+
+    } );
+    
+    const filtroAtivo = event.target.closest("button[data-filtro]");
+
+    filtroAtivo.classList.add('ativo');
+    
     renderizar();
 });
 
-adicionar.addEventListener("click", adicionarTarefa);
 
-tarefa.addEventListener("keydown", (event) => { // ativando botao "ENTER", para enviar tarefas para a lista de tarefas
-    if (event.key === "Enter"){
-        adicionarTarefa();
-    } 
+campoFormulario.addEventListener("submit", (event) => {
+    event.preventDefault();
+    adicionarTarefa();
 });
 
 listaTarefas.addEventListener("click", (event) => { //configurando botão de editar/remover
+    const botao = event.target.closest("button[data-acao]");
 
-    if(event.target.dataset.acao === "remover") {
+    if(!botao) {
+        return
+    }
 
-        const item = event.target.parentElement;
+    if(botao.dataset.acao === "remover") {
+
+        const item = event.target.closest("li");
         const idTarefa = Number(item.dataset.tarefa);
 
         const atualizadas = tarefas.filter((tarefa) => {
@@ -200,9 +230,10 @@ listaTarefas.addEventListener("click", (event) => { //configurando botão de edi
         salvarTarefas();
         notificacao("Tarefa removida com sucesso! 🗑️");
         renderizar();
-    } else if (event.target.dataset.acao === "editar") {
+        
+    } else if (botao.dataset.acao === "editar") {
         //[OBSERVAÇÃO] — Evitar que o usuário comece outra edição sem finalizar a anterior
-        const item = event.target.parentElement;
+        const item = event.target.closest("li");
         const idTarefa = Number(item.dataset.tarefa);
         const resultado = tarefas.find((tarefa) => tarefa.id === idTarefa);
 
