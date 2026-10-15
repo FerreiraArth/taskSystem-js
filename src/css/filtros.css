@@ -1,0 +1,41 @@
+/* ========================================
+    FILTROS
+======================================== */
+
+#filtros {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+#filtros button {
+    flex: 1;
+    padding: 10px 8px;
+
+    background-color: var(--cor-superficie-secundaria);
+    color: var(--cor-texto-secundario);
+
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+
+    font-size: 12px;
+    font-weight: bold;
+
+    cursor: pointer;
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+#filtros button:hover {
+    background-color: var(--cor-primaria-escura);
+    color: var(--cor-texto-principal);
+    border-color: var(--cor-borda-destaque);
+}
+
+#filtros button.ativo {
+    background-color: var(--cor-primaria);
+    color: var(--cor-texto-principal);
+    border-color: var(--cor-primaria);
+}

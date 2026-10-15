@@ -1,0 +1,59 @@
+
+
+/* ========================================
+    CAMPO DE FORMULÁRIO
+======================================== */
+
+#campoFormulario {
+    display: flex;
+    gap: 10px;
+    margin-top: 28px;
+}
+
+#tarefa {
+    flex: 1;
+    min-width: 0;
+    padding: 12px 14px;
+
+    background-color: var(--cor-campo);
+    color: var(--cor-texto-principal);
+
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+
+    font-size: 14px;
+}
+
+#tarefa::placeholder {
+    color: var(--cor-placeholder);
+}
+
+#tarefa:focus {
+    outline: none;
+    border-color: var(--cor-primaria);
+}
+
+
+/* ========================================
+    BOTÃO ADICIONAR
+======================================== */
+
+#adicionar {
+    padding: 12px 18px;
+
+    background-color: var(--cor-primaria);
+    color: var(--cor-texto-principal);
+
+    border: none;
+    border-radius: 8px;
+
+    font-size: 14px;
+    font-weight: bold;
+
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+#adicionar:hover {
+    background-color: var(--cor-primaria-hover);
+}

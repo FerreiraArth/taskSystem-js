@@ -1,4 +1,13 @@
-@import url("tarefaConcluida.css");
+@import url("formulario.css");
+@import url("main.css");
+@import url("filtros.css");
+@import url("listaTarefas.css");
+@import url("contador.css");
+@import url("notificacao.css");
+
+/* ========================================
+    VARIÁVEIS GLOBAIS
+======================================== */
 
 :root {
     /* Fundos */
@@ -22,20 +31,25 @@
 
     /* Estados */
     --cor-sucesso: #4ADE80;
-    --cor-erro: #F87171;
+    --cor-remover: #F87171;
+    --cor-remover-hover: #b84040;
 
     /* Formulários */
     --cor-campo: #100E13;
     --cor-placeholder: #85808F;
 }
 
+
+/* ========================================
+    CONFIGURAÇÕES GERAIS
+======================================== */
+
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box3;
+    box-sizing: border-box;
 }
 
 body {
+    margin: 0;
     min-height: 100vh;
     background-color: var(--cor-fundo);
     color: var(--cor-texto-principal);

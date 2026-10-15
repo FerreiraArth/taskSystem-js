@@ -1,0 +1,123 @@
+/* ========================================
+    LISTA DE TAREFAS
+======================================== */
+
+#listaTarefas {
+    list-style: none;
+    padding: 0;
+    margin: 24px 0;
+}
+
+#listaTarefas li {
+    background-color: var(--cor-superficie-secundaria);
+    padding: 14px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    
+    display: flex;
+    gap: 10px;
+}
+
+/* ========================================
+    LISTA DE TAREFAS - BUTTONS
+======================================== */
+
+.informacoesTarefa {
+    flex: 1;
+    min-width: 0;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+}
+.acoesTarefa {
+    display: flex;
+    gap: 10px;
+}
+
+button[data-acao="editar"] {
+    background-color: var(--cor-primaria);
+    color: var(--cor-texto-principal);
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition:
+        background-color 0.2s ease;
+    }
+button[data-acao="editar"]:hover {
+    background-color: var(--cor-primaria-hover);
+}
+
+button[data-acao="remover"] {
+    background-color: var(--cor-remover);
+    color: var(--cor-texto-principal);
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition:
+    background-color 0.2s ease;
+}
+button[data-acao="remover"]:hover {
+    background-color: var(--cor-remover-hover);
+}
+
+/* ========================================
+    LISTA DE TAREFAS - CHECKBOX
+======================================== */
+
+#listaTarefas li.concluida {
+    opacity: 0.5;
+    color: var(--cor-borda-destaque);
+    font-style: italic;
+}
+
+#listaTarefas li.concluida label {
+    text-decoration: line-through;
+}
+
+#listaTarefas input[type="checkbox"] {
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    background-color: var(--cor-campo);
+    border: 2px solid var(--cor-borda);
+    border-radius: 6px;
+    cursor: pointer;
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+#listaTarefas input[type="checkbox"]:checked {
+    background-color: var(--cor-primaria);
+    border-color: var(--cor-primaria-hover);
+    box-shadow: 0 0 8px rgba(91, 42, 158, 0.45);
+}
+
+#listaTarefas input[type="checkbox"]::after {
+    content: "";
+    width: 5px;
+    height: 9px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+#listaTarefas input[type="checkbox"]:checked::after {
+    opacity: 1;
+}
