@@ -106,8 +106,8 @@ function listarTarefas(lista){
         editar.textContent = "Editar";
         item.dataset.tarefa = tarefaAtual.id;
         
-        informacoesTarefa.classList.add("informacoes-tarefa");
-        acoesTarefa.classList.add("acoes-tarefa");
+        informacoesTarefa.classList.add("informacoesTarefa");
+        acoesTarefa.classList.add("acoesTarefa");
 
         informacoesTarefa.appendChild(checkbox);
         informacoesTarefa.appendChild(label);
