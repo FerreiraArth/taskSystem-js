@@ -1,0 +1,35 @@
+#mensagem {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+
+    width: calc(100% - 40px);
+    max-width: 360px;
+    padding: 14px 18px;
+
+    border-radius: 8px;
+    color: #0A0A0A;
+
+    font-size: 16px;
+    text-align: center;
+
+    opacity: 0;
+}
+
+#mensagem.toast {
+    opacity: 1;
+    background-color: var(--cor-sucesso);
+    animation: show 0.3s ease-out;
+}
+
+@keyframes show {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0px);
+        opacity: 1;
+  }
+}

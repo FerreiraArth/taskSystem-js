@@ -1,5 +1,3 @@
-
-
 /* ========================================
     CAMPO DE FORMULÁRIO
 ======================================== */
@@ -33,7 +31,6 @@
     border-color: var(--cor-primaria);
 }
 
-
 /* ========================================
     BOTÃO ADICIONAR
 ======================================== */
@@ -56,4 +53,21 @@
 
 #adicionar:hover {
     background-color: var(--cor-primaria-hover);
+}
+
+/* ========================================
+    BOTÃO CANCELAR
+======================================== */
+
+#btn-cancelar {
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+
+    color: var(--cor-texto-principal);
+    background-color: var(--cor-cancelar);
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+#btn-cancelar:hover {
+    background-color: #4A4354;
 }

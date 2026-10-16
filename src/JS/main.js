@@ -14,10 +14,14 @@ const campoFormulario = document.querySelector("#campoFormulario");
 
 function notificacao(texto){  //funcao para que o texto seja exibido apenas por 3 segundos
     mensagem.textContent = texto;
-    clearTimeout(temporizador);
 
+    mensagem.classList.add("toast");
+    
+    clearTimeout(temporizador);
+    
     temporizador = setTimeout(() => {
         mensagem.textContent = ""
+        mensagem.classList.remove("toast");
     }, 3000);
 }
 
