@@ -178,7 +178,7 @@ function adicionarTarefa() {
 
 }
 
-filtros.addEventListener("click", (event) => { //disparo do filtro    \
+filtros.addEventListener("click", (event) => { //disparo do filtro
 
     const filtroSelecionado = event.target.dataset.filtro;
 

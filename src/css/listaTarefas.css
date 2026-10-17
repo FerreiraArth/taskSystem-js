@@ -79,10 +79,13 @@ button[data-acao="remover"]:hover {
 
 #listaTarefas li.concluida label {
     text-decoration: line-through;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 #listaTarefas li label {
     overflow-wrap: anywhere;
-}
+}  
 
 #listaTarefas input[type="checkbox"] {
     appearance: none;
