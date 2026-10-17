@@ -33,6 +33,7 @@
 }
 .acoesTarefa {
     display: flex;
+    align-items: flex-start;
     gap: 10px;
 }
 
@@ -78,6 +79,9 @@ button[data-acao="remover"]:hover {
 
 #listaTarefas li.concluida label {
     text-decoration: line-through;
+}
+#listaTarefas li label {
+    overflow-wrap: anywhere;
 }
 
 #listaTarefas input[type="checkbox"] {
