@@ -55,7 +55,12 @@ body {
     align-items: center;
     margin: 0;
     min-height: 100vh;
-    background-color: var(--cor-fundo);
+    background: linear-gradient(
+        135deg,
+        var(--cor-primaria-escura),
+        var(--cor-primaria),
+        var(--cor-primaria-escura)
+    );
     color: var(--cor-texto-principal);
     font-family: Arial, Helvetica, sans-serif;
 }

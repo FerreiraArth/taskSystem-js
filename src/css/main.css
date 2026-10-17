@@ -25,3 +25,22 @@ h1 {
     font-size: 28px;
     letter-spacing: 3px;
 }
+
+.text{
+  font-weight: bold;
+  
+  /* 1. Define o gradiente de fundo */
+  background: linear-gradient(
+    to left,
+    var(--cor-primaria),
+    var(--cor-texto-principal)
+);
+  
+  /* 2. Recorta o fundo para preencher apenas o texto */
+  -webkit-background-clip: text;
+  background-clip: text;
+  
+  /* 3. Deixa a cor original do texto transparente */
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
