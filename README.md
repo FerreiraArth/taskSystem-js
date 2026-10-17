@@ -55,7 +55,7 @@ Algumas decisões que tomei durante o projeto:
 2. Abra o `index.html` no navegador.
 
 ## 📸 Preview
-![Preview do projeto](./preview.png)
+![Preview do projeto](src/assets/images/Macbook-Air-127.0.0.1.png)
 
 ## 🔗 Demo
 [Ver online](https://ferreiraarth.github.io/taskSystem-js/)
